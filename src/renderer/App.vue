@@ -12,4 +12,8 @@
 
 <style>
   /* CSS */
+  html {
+    background: radial-gradient(ellipse at top, #89fffb 0%,#04a7f8 100%);
+    min-height: 100vh;
+  }
 </style>
