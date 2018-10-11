@@ -48,7 +48,7 @@
             <div v-if="valid === 'valid'">
               <p class="title is-4">{{company.name}}</p>
               <p>Free Trial Signup Date: <span class="title is-6">{{dateCreated}}</span></p>
-              <p>Date Last Used: <span class="title is-6">{{lastTimeUsed}}</span></p>
+              <p>Last token created: <span class="title is-6">{{lastTimeUsed}}</span></p>
               <p>Total estimates ever created: <span class="title is-6">{{estimatesTotal}}</span></p>
               <p>Number of estimates created in last 7 days: <span class="title is-6"> {{sevenDayEstimatesTotal}}</span></p>
               <p>Most recent estimate created on: <span class="title is-6"> {{mostRecentEstimate}}</span></p>
@@ -105,7 +105,7 @@ export default {
           context.valid = 'valid'
           context.company = sub[0].toObject()
           context.dateCreated = format(new Date(context.company.dateCreated), 'MMMM Do YYYY')
-          Estimates.find({ 'company': context.company._id }).count(function (err, count) {
+          Estimates.find({ 'company': context.company._id }).countDocuments(function (err, count) {
             if (err) console.log(err)
             context.estimatesTotal = count
           })
@@ -123,17 +123,17 @@ export default {
             context.invoicesTotal = count
           })
           Invoices.find({ 'company': context.company._id })
-            .sort({ createdAt: 1 })
+            .sort({ dateCreated: -1 })
             .limit(1).then(invoices => {
               context.mostRecentInvoice = format(new Date(invoices[0].dateCreated), 'MMMM Do YYYY')
             })
           Estimates.find({ 'company': context.company._id })
-            .sort({ createdAt: 1 })
+            .sort({ dateCreated: -1 })
             .limit(1).then(estimates => {
               context.mostRecentEstimate = format(new Date(estimates[0].dateCreated), 'MMMM Do YYYY')
             })
           Sessions.find({ 'company': context.company._id })
-            .sort({ createdAt: 1 })
+            .sort({ dateCreated: -1 })
             .limit(1).then(sessions => {
               context.lastTimeUsed = format(new Date(sessions[0].dateCreated), 'MMMM Do YYYY')
             })
