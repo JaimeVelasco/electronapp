@@ -70,29 +70,36 @@ import Invoices from './../../models/invoices'
 import Sessions from './../../models/sessions'
 import { format, subDays } from 'date-fns'
 
+function getInitialData () {
+  return {
+    company: null,
+    subid: null,
+    dateCreated: null,
+    valid: false,
+    estimatesTotal: null,
+    sevenDayEstimatesTotal: null,
+    invoicesTotal: null,
+    sevenDayInvoicesTotal: null,
+    lastTimeUsed: null,
+    mostRecentEstimate: null,
+    mostRecentInvoice: null
+  }
+}
+
 export default {
   name: 'customer-id-form',
   data () {
-    return {
-      company: '',
-      subid: '',
-      dateCreated: '',
-      valid: false,
-      estimatesTotal: '',
-      sevenDayEstimatesTotal: '',
-      invoicesTotal: '',
-      sevenDayInvoicesTotal: '',
-      lastTimeUsed: '',
-      mostRecentEstimate: '',
-      mostRecentInvoice: ''
-    }
+    return getInitialData()
   },
   created: function () {
     // console.log('created')
   },
   methods: {
-    subsHandler () {
+    subsHandler (subid) {
+      subid = this.subid
+      Object.assign(this.$data, getInitialData())
       let context = this
+      this.subid = subid
       context.valid = 'searching'
       Companies.find({ 'stripe.customerID': context.subid })
         .catch(function (err) {
