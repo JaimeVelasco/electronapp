@@ -1,9 +1,9 @@
 {
   "name": "CustomerID_checker",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "author": "JaimeVelasco <contact@jaimevelas.co>",
   "description": "An electron-vue project",
-  "license": null,
+  "license": "MobiletechRX" ,
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
